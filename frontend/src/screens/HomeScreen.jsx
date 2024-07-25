@@ -1,4 +1,4 @@
-import { Card, Row, Col, Button, Image } from "react-bootstrap";
+import { Card, Row, Col, Button, Image, Accordion } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { Link } from "react-router-dom";
@@ -10,17 +10,23 @@ import ProductCarousel from "../components/ProductCarousel";
 import Meta from "../components/Meta";
 
 const HomeScreen = () => {
-
-  var result = 'Heads or Tails';
-  const tossCoin =() => {
-    console.log('sfd');
-    result = 'Tails';
-  }
+  var result = "Heads or Tails";
+  const tossCoin = () => {
+    console.log("sfd");
+    result = "Tails";
+  };
 
   return (
     <>
       <Card className="p-3 rounded">
-       <h5>Yahan pr data dikhaya jayega. Ki Head aa raha hai ya Tail</h5>
+        <Accordion defaultActiveKey="0">
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Head, Tail, Head, Tail, Head, ...</Accordion.Header>
+            <Accordion.Body>
+            Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, 
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
         <Card.Img src={require("../assets/heads.png")} variant="top" />
