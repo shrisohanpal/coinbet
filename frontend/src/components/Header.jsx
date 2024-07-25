@@ -38,8 +38,8 @@ const Header = () => {
            {/*  <img src={logo} alt='CoinBet' /> */}
             <strong>CoinBet</strong>
           </Navbar.Brand>
-          <Navbar.Text as={Link} to='/wallet'>
-            <FaWallet /> <strong> 23,649 INR</strong>
+          <Navbar.Text as={Link} to='/wallet' style={{ textDecoration: 'none' }}>
+            <FaWallet /> <strong> 34,581 INR</strong>
           </Navbar.Text>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
