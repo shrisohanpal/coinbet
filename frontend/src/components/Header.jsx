@@ -39,7 +39,7 @@ const Header = () => {
             <strong>CoinBet</strong>
           </Navbar.Brand>
           <Navbar.Text as={Link} to='/wallet' style={{ textDecoration: 'none' }}>
-            <FaWallet /> <strong> 34,581 INR</strong>
+            <FaWallet /> <strong> 9000 INR</strong>
           </Navbar.Text>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
