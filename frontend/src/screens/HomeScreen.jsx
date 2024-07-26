@@ -37,7 +37,7 @@ const HomeScreen = () => {
 
   
   return (
-    <>
+    <div style={{marginLeft:'auto', marginRight:'auto', maxWidth:'400px'}}>
       <Card className="p-3 rounded">
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="1">
@@ -88,7 +88,7 @@ const HomeScreen = () => {
           </Col>
         </Row>
       </Card>
-    </>
+    </div>
   );
 };
 
