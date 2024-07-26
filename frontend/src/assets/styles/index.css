@@ -51,3 +51,12 @@ table th {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
 }
+
+@keyframes spin { 
+	0% { 
+		transform: rotateY(0deg); 
+	}  
+	100% { 
+		transform: rotateY(360deg);
+	} 
+} 

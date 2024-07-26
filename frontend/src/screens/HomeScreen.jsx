@@ -7,7 +7,7 @@ import {
   Image,
   Accordion,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
@@ -16,14 +16,26 @@ import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
 import Meta from "../components/Meta";
+import { useState } from "react";
 
 const HomeScreen = () => {
+
+  const [rakshak, setRakshak] = useState({width: "70%", alignSelf: "center"});
   var result = "Heads or Tails";
   const tossCoin = () => {
-    console.log("sfd");
-    result = "Tails";
+    setRakshak({width: "70%", alignSelf: "center", animation: `spin 1s cubic-bezier(0.4, 2.5, 0.6, 0.5)`});
+    setTimeout(()=>{
+      setRakshak({width: "70%", alignSelf: "center"});
+    }, 1000);
   };
 
+  const[betAmount, setBetAmount] = useState(10.39);
+  const newAmt = (hty) => {
+    console.log(hty)
+    setBetAmount(500.25);
+  };
+
+  
   return (
     <>
       <Card className="p-3 rounded">
@@ -43,11 +55,14 @@ const HomeScreen = () => {
         </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
+        
         <Card.Img
           src={require("../assets/heads.png")}
           variant="top"
-          style={{ width: "70%", alignSelf: "center" }}
+         // style={{ width: "70%", alignSelf: "center" }}
+         style={rakshak}
         />
+  
         <Form.Select className="my-3" aria-label="Default select example">
           <option>Select Your Side</option>
           <option value="1">Head</option>
@@ -57,7 +72,7 @@ const HomeScreen = () => {
         <Row>
           <Col>
             <Form.Group className="my-1" controlId="exampleForm.ControlInput1">
-              <Form.Control type="number" placeholder="Amount" />
+              <Form.Control type="number" placeholder="Amount" onInput={newAmt}/>
             </Form.Group>
           </Col>
           <Col>
@@ -68,7 +83,7 @@ const HomeScreen = () => {
               onClick={tossCoin}
               variant="primary"
             >
-              BET 10.00 INR
+              BET {betAmount} INR
             </Button>
           </Col>
         </Row>
