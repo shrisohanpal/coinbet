@@ -6,7 +6,8 @@ dotenv.config();
 import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
-import coin from './coin.js';
+import coinRoutes from './routes/coinRoutes.js';
+import { toss } from './controllers/coinController.js';
 const port = process.env.PORT || 5000;
 
 connectDB();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
+app.use('/api/coin', coinRoutes);
 
 if(process.env.NODE_ENV === 'production'){
 
@@ -40,6 +42,7 @@ if(process.env.NODE_ENV === 'production'){
 
 app.use(notFound);
 app.use(errorHandler);
-setInterval(coin, 30 * 1000);
+toss();
+setInterval(toss, 6 * 1000);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

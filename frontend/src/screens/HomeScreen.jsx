@@ -1,12 +1,4 @@
-import {
-  Card,
-  Row,
-  Col,
-  Button,
-  Form,
-  Image,
-  Accordion,
-} from "react-bootstrap";
+import {  Card,  Row,  Col,  Button,  Form,  Image,  Accordion } from "react-bootstrap";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { Link } from "react-router-dom";
@@ -35,6 +27,7 @@ const HomeScreen = () => {
     setBetAmount(500.25);
   };
 
+  const { data, isLoading, error } = useGetProductsQuery();
   
   return (
     <div style={{marginLeft:'auto', marginRight:'auto', maxWidth:'400px'}}>
@@ -55,7 +48,9 @@ const HomeScreen = () => {
         </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
-        
+        <Card.Text>
+          Status: "Status", result: "re"
+        </Card.Text>
         <Card.Img
           src={require("../assets/heads.png")}
           variant="top"
