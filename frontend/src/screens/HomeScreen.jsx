@@ -1,6 +1,6 @@
 import {  Card,  Row,  Col,  Button,  Form,  Image,  Accordion } from "react-bootstrap";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useGetProductsQuery } from "../slices/productsApiSlice";
+import { useGetCoinQuery } from "../slices/coinApiSlice";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
@@ -27,8 +27,9 @@ const HomeScreen = () => {
     setBetAmount(500.25);
   };
 
-  const { data, isLoading, error } = useGetProductsQuery();
-  
+ // var data, isLoading, error;
+  const { data, isLoading, error } = useGetCoinQuery();
+
   return (
     <div style={{marginLeft:'auto', marginRight:'auto', maxWidth:'400px'}}>
       <Card className="p-3 rounded">
@@ -49,7 +50,7 @@ const HomeScreen = () => {
       </Card>
       <Card className="my-3 p-3 rounded">
         <Card.Text>
-          Status: "Status", result: "re"
+          Status: {isLoading ? '' : data.status}, result: {isLoading ? '' : data.result}
         </Card.Text>
         <Card.Img
           src={require("../assets/heads.png")}
