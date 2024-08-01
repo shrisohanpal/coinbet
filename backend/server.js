@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 let status; //= "initial Value of Status";
 let result; //= "initial value of Result";
 
-//connectDB();
+connectDB();
 const app = express();
 
 // Body parser middleware
@@ -57,7 +57,8 @@ setInterval(readg, 30 * 1000);*/
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: "http://localhost:3000",
+  //cors: "http://localhost:3000",
+  cors: "*",
 });
 
 let variableToWatch = 0;
