@@ -1,10 +1,8 @@
-import express from 'express';
-import {
-  getCoinStatus
-} from '../controllers/coinController.js';
+import express from "express";
+//import { getCoinData } from "../controllers/coinController.js";
 
 const router = express.Router();
 
-router.route('/').get(getCoinStatus);
+//router.route("/").get(getCoinData);
 
 export default router;
