@@ -82,7 +82,7 @@ const HomeScreen = () => {
       <Card className="my-3 p-3 rounded">
         <Card.Text>variable: {variableValue}</Card.Text>
         <Card.Text>Status: {status}</Card.Text>
-        <Card.Text>Result: {result}</Card.Text>
+        <Card.Text>Result2: {result}</Card.Text>
         <Card.Img
           src={require("../assets/heads.png")}
           variant="top"
