@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
   socket.emit("variableChanged", { value: variableToWatch, status, result });
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("Client disconnected");//fdfd
   });
 });
 
