@@ -25,7 +25,7 @@ const HomeScreen = () => {
   const [result, setResult] = useState();
 
   useEffect(() => {
-    const socket = io("http://localhost:5000", {
+    const socket = io("", {
       autoConnect: true,
     });
 
