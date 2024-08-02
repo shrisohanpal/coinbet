@@ -9,11 +9,12 @@ import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import userRoutes from "./routes/userRoutes.js";
 import coinRoutes from "./routes/coinRoutes.js";
-//import { toss } from "./controllers/coinController.js";
+import { addCoinbet, updateHistory } from "./controllers/coinbetController.js";
 const port = process.env.PORT || 5000;
 
-let status; //= "initial Value of Status";
-let result; //= "initial value of Result";
+let status;
+let result;
+let history = [];
 
 connectDB();
 const app = express();
@@ -68,35 +69,41 @@ io.on("connection", (socket) => {
   socket.emit("variableChanged", { value: variableToWatch, status, result });
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");//fdfd
+    console.log("Client disconnected"); //fdfd
   });
 });
 
 // Function to update the variable and emit event if it changes
 const updateVariable = (newValue, status, result) => {
-  io.emit("variableChanged", { value: newValue, status, result });
+  io.emit("variableChanged", { value: newValue, status, result, history });
 };
+/*
+const updateHistory = (history) => {
+  io.emit("updateHistory", { history });
+};*/
 
 const toss = () => {
   const randomVal = Math.random();
   const faceCoin = randomVal < 0.5 ? "HEAD" : "TAIL";
   const newValue = Math.floor(Math.random() * 100);
-  updateVariable(newValue, "Points lagao moment has started!", result); // yahan pr result nahi dikhana
+  updateVariable(newValue, "Points lagao moment has started!", result, history);
   setTimeout(() => {
-    const newStatus2 = "Ab coin ghum raha hai!";
-    updateVariable(newValue, "Ab coin ghum raha hai!", result); // yahan pr bhi nahi
+    updateVariable(newValue, "Ab coin ghum raha hai!", result, history);
     setTimeout(() => {
+      addCoinbet(45, 78, faceCoin);
+      updateHistory(history);
       updateVariable(
         newValue,
         "Ab result dikh raha hai aur next round ka wait kar rahe hai!",
-        faceCoin
-      ); // yahan pr dikhana hai bs
-    }, 2000);
-  }, 2000);
+        faceCoin,
+        history
+      );
+    }, 10 * 1000);
+  }, 10 * 1000);
 };
 
 setInterval(() => {
   toss();
-}, 6000);
+}, 30 * 1000);
 
 httpServer.listen(port, () => console.log(`Server running on port ${port}`));

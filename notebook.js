@@ -2,11 +2,11 @@
 
 
  //   10 tasks to do in this project
-//  01. Real Time Updates add karne hai                                 PUBLIC
-//  02. Now every bet will stored in DB                                 PRIVATE
-//  03. Now History of the coin will be shown.                          PUBLIC
-//  04. Now Only Logind Person can see all the things.                  PUBLIC
-//  05. Now a Person can bet on the game                                PUBLIC
+//  01. Real Time Updates add karne hai                                 PUBLIC      DONE
+//  02. Now every bet will stored in DB                                 PRIVATE     DONE
+//  03. Now History of the coin will be shown.                          PUBLIC      DONE
+//  04. Now Only Logind Person can see all the things.                  PUBLIC      DONE
+//  05. Now a Person can bet on the game                                PUBLIC      DONE
 //  06. Now every Bet of the Person will be stored in Mongo DB.         PUBLIC
 //  07. Now user can deposite or withdraw money by himself.             PUBLIC
 //  08. Now user can see his transiciton history.                       PUBLIC

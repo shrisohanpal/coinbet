@@ -11,18 +11,13 @@ import {
 } from "react-bootstrap";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useGetCoinQuery } from "../slices/coinApiSlice";
-import { Link } from "react-router-dom";
-import Product from "../components/Product";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import Paginate from "../components/Paginate";
-import ProductCarousel from "../components/ProductCarousel";
-import Meta from "../components/Meta";
+import HistoryElement from "../components/HistoryElement";
 
 const HomeScreen = () => {
   const [variableValue, setVariableValue] = useState(0);
   const [status, setStatus] = useState();
   const [result, setResult] = useState();
+  const [history, setHistory] = useState(["head", "tail"]);
 
   useEffect(() => {
     const socket = io("", {
@@ -33,7 +28,13 @@ const HomeScreen = () => {
       setVariableValue(data.value);
       setStatus(data.status);
       setResult(data.result);
+      setHistory(data.history);
     });
+
+    socket.on("updateHistory", (data) => {
+      setHistory(data.history);
+    });
+
     return () => {
       socket.disconnect();
     };
@@ -67,14 +68,20 @@ const HomeScreen = () => {
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="1">
             <Accordion.Header>
-              <strong>Head, Tail, Head, Tail, Head, ...</strong>
+              {history
+                ? history[0] +
+                  ", " +
+                  history[1] +
+                  ", " +
+                  history[2] +
+                  ", " +
+                  history[3]
+                : ""}
             </Accordion.Header>
             <Accordion.Body>
-              Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head,
-              Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail,
-              Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head,
-              Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail, Head, Tail,
-              Head, Tail, Head, Tail, Head, Tail, Head, Tail,
+              {history?.map((e) => {
+                return e + ", ";
+              })}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

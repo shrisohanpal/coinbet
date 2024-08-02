@@ -27,3 +27,4 @@ const coinbetSchema = mongoose.Schema(
 const Coinbet = mongoose.model("Coinbet", coinbetSchema);
 
 export default Coinbet;
+ 
