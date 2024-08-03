@@ -1,31 +1,54 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Button, Modal, Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { useGetProductsQuery } from "../slices/productsApiSlice";
-import { Link } from "react-router-dom";
-import Product from "../components/Product";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import Paginate from "../components/Paginate";
-import ProductCarousel from "../components/ProductCarousel";
-import Meta from "../components/Meta";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useProfileMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
 
 const WalletScreen = () => {
-  const [show, setShow] = useState(false);
+  const [mainAmt, setMainAmt] = useState("");
+  const [bonusAmt, setBonusAmt] = useState("");
+  const [winningAmt, setWinningAmt] = useState("");
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [updateProfile, { isLoading: loadingUpdateProfile }] =
+    useProfileMutation();
+
+  useEffect(() => {
+    setMainAmt(userInfo.mainAmt);
+    setBonusAmt(userInfo.bonusAmt);
+    setWinningAmt(userInfo.winningAmt);
+  }, [userInfo.mainAmt, userInfo.bonusAmt, userInfo.winningAmt]);
+
+  const dispatch = useDispatch();
+  const depositeHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await updateProfile({
+        mainAmt: userInfo.mainAmt + 100,
+      }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      toast.success("Deposited successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   return (
     <>
       <Card className="my-3 p-3 rounded">
         <Row>
           <Col>
-            <h5>2500 INR</h5>
+            <h5>{mainAmt} INR</h5>
             Main Balance
           </Col>
           <Col style={{ alignContent: "center" }}>
-            <Button>Deposit Now</Button>
+            <Button onClick={depositeHandler}>Deposit Now</Button>
           </Col>
         </Row>
       </Card>

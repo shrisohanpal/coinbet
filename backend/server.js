@@ -53,7 +53,6 @@ const readg = () =>{
   toss(status,result)
 }
 setInterval(readg, 30 * 1000);*/
-
 //app.listen(port, () => console.log(`Server running on port ${port}`));
 
 const httpServer = createServer(app);

@@ -18,6 +18,7 @@ const HomeScreen = () => {
   const [status, setStatus] = useState();
   const [result, setResult] = useState();
   const [history, setHistory] = useState(["head", "tail"]);
+  const [userLogin, setUserLogin] = useState(false);
 
   useEffect(() => {
     const socket = io("", {
