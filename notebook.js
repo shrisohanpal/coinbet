@@ -29,3 +29,12 @@
 
 
 
+/**
+ * Today's Work
+ * 1. Header sahi karna hai
+ * 2. Animation sahi karna hai
+ * 3. Users can bet Finally
+ * 4. Betting Animation create karna hai
+ * 5. Every Bet will be store in MongoDB
+ * 6. Users can see their bets 
+ */

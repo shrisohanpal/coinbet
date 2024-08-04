@@ -12,6 +12,7 @@ import {
 import { useParams, useSearchParams } from "react-router-dom";
 import { useGetCoinQuery } from "../slices/coinApiSlice";
 import HistoryElement from "../components/HistoryElement";
+import SpinningCoin from "../components/SpinningCoin";
 
 const HomeScreen = () => {
   const [variableValue, setVariableValue] = useState(0);
@@ -56,8 +57,7 @@ const HomeScreen = () => {
 
   const [betAmount, setBetAmount] = useState(10.39);
   const newAmt = (hty) => {
-    console.log(hty);
-    setBetAmount(500.25);
+    setBetAmount(Number(hty.target.value));
   };
 
   // var data, isLoading, error;
@@ -91,12 +91,8 @@ const HomeScreen = () => {
         <Card.Text>variable: {variableValue}</Card.Text>
         <Card.Text>Status: {status}</Card.Text>
         <Card.Text>Result2: {result}</Card.Text>
-        <Card.Img
-          src={require("../assets/heads.png")}
-          variant="top"
-          // style={{ width: "70%", alignSelf: "center" }}
-          style={rakshak}
-        />
+        <SpinningCoin />
+        <Card.Text>Result: waiting...</Card.Text>
 
         <Form.Select className="my-3" aria-label="Default select example">
           <option>Select Your Side</option>
