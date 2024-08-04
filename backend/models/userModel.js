@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema(
     mainAmt: {
       type: Number,
       required: true,
-      default: 2500,
+      default: 0,
     },
     bonusAmt: {
       type: Number,
@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema(
     winningAmt: {
       type: Number,
       required: true,
-      default: 5000,
+      default: 50000,
     },
     numofBets: {
       type: Number,
