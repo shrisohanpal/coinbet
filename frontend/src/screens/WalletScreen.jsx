@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 
-
-
 const WalletScreen = () => {
   const [depositeAmt, setDepositeAmt] = useState(null);
   const [withdrawAmt, setWithdrawAmt] = useState(null);
@@ -18,9 +16,9 @@ const WalletScreen = () => {
   const handleDepositeClose = () => setShowDepositeModal(false);
   const handleDepositeShow = () => setShowDepositeModal(true);
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const handleWithdrawClose = () => setShowWithdrawModal(false);
+  const handleWithdrawShow = () => setShowWithdrawModal(true);
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -46,6 +44,25 @@ const WalletScreen = () => {
       setDepositeAmt(null);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const withdrawHandler = async (e) => {
+    setShowWithdrawModal(false);
+    e.preventDefault();
+    if (userInfo.winningAmt >= withdrawAmt) {
+      try {
+        const res = await updateProfile({
+          winningAmt: userInfo.winningAmt - withdrawAmt,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        toast.success("Withdraw successfully");
+        setWithdrawAmt(null);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    } else {
+      toast.error("Not Enough Balance!");
     }
   };
 
@@ -80,7 +97,7 @@ const WalletScreen = () => {
             Winning Balance
           </Col>
           <Col style={{ alignContent: "center" }}>
-            <Button onClick={handleShow}>Withdraw Now</Button>
+            <Button onClick={handleWithdrawShow}>Withdraw Now</Button>
           </Col>
         </Row>
       </Card>
@@ -105,7 +122,7 @@ const WalletScreen = () => {
         </Modal.Body>
       </Modal>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showWithdrawModal} onHide={handleWithdrawClose}>
         <Modal.Header closeButton>
           <Modal.Title>Withdraw Now</Modal.Title>
         </Modal.Header>
@@ -120,7 +137,16 @@ const WalletScreen = () => {
               Enter IFSC Code:
               <Form.Control type="text" placeholder="IFSC Code" />
             </Form.Group>
-            <Button style={{ width: "100%" }}>Submit</Button>
+            Enter Withdraw Amount:
+            <Form.Control
+              type="number"
+              value={withdrawAmt}
+              onChange={(e) => setWithdrawAmt(Number(e.target.value))}
+            />
+            .<Form.Group></Form.Group>
+            <Button style={{ width: "100%" }} onClick={withdrawHandler}>
+              Submit
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>
