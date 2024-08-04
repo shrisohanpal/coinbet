@@ -26,10 +26,6 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // setStatus(coinData.status);
-    //setResult(coinData.result);
-    //setHistory(coinData.history);
-
     const socket = io("", {
       autoConnect: true,
     });
@@ -54,6 +50,10 @@ const HomeScreen = () => {
       socket.disconnect();
     };
   }, []);
+
+  const betHandler = () => {
+    console.log("Laga diya !");
+  };
 
   return (
     <div style={{ marginLeft: "auto", marginRight: "auto", maxWidth: "400px" }}>
@@ -80,11 +80,15 @@ const HomeScreen = () => {
         </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
-        <Card.Text>variable: {variableValue}</Card.Text>
+        {/*
+          <Card.Text>variable: {variableValue}</Card.Text>
         <Card.Text>Status: {coinData.status}</Card.Text>
         <Card.Text>Result: {coinData.result}</Card.Text>
-        <SpinningCoin status={coinData.status} result={coinData.result}/>
-        <Card.Text>Result: waiting...</Card.Text>
+        */}
+        <SpinningCoin status={coinData.status} result={coinData.result} />
+        <Card.Text className="mx-auto my-2">
+          <strong>Result: {coinData.result}</strong>
+        </Card.Text>
 
         <Form.Select className="my-3" aria-label="Default select example">
           <option>Select Your Side</option>
@@ -105,9 +109,9 @@ const HomeScreen = () => {
           <Col>
             <Button
               className="my-1"
-              disabled={false}
+              disabled={coinData.status != "Betting"}
               type="submit"
-              // onClick={tossCoin}
+              onClick={betHandler}
               variant="primary"
             >
               BET {betAmount} INR
