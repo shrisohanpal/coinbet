@@ -1,11 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 
-const SpinningCoin = () => {
-  
-
+const SpinningCoin = ({ status }) => {
   var imgUrl = require("../assets/tails.png");
-
   return (
     <>
       <style>
@@ -22,17 +19,15 @@ const SpinningCoin = () => {
             } 
           }
           .rotating-image {
-            width: 70%;
             animation: spin 0.5s linear infinite;
           }
-
        `}
       </style>
       <Card.Img
         src={imgUrl}
         variant="top"
-        className="rotating-image"
-        style={{ alignSelf: "center" }}
+        className={status == "Spinning" ? "rotating-image" : ""}
+        style={{ alignSelf: "center", width: "70%" }}
       />
     </>
   );

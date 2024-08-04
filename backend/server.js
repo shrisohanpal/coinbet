@@ -85,18 +85,13 @@ const toss = () => {
   const randomVal = Math.random();
   const faceCoin = randomVal < 0.5 ? "HEAD" : "TAIL";
   const newValue = Math.floor(Math.random() * 100);
-  updateVariable(newValue, "Points lagao moment has started!", result, history);
+  updateVariable(newValue, "Betting", result, history);
   setTimeout(() => {
-    updateVariable(newValue, "Ab coin ghum raha hai!", result, history);
+    updateVariable(newValue, "Spinning", result, history);
     setTimeout(() => {
       addCoinbet(45, 78, faceCoin);
       updateHistory(history);
-      updateVariable(
-        newValue,
-        "Ab result dikh raha hai aur next round ka wait kar rahe hai!",
-        faceCoin,
-        history
-      );
+      updateVariable(newValue, "Waiting", faceCoin, history);
     }, 10 * 1000);
   }, 10 * 1000);
 };
