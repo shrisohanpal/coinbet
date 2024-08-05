@@ -47,6 +47,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(notFound);
 app.use(errorHandler);
+
 /*
 toss(status,result);
 const readg = () =>{
@@ -70,6 +71,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Client disconnected"); //fdfd
   });
+
+  socket.on("betted", (data) => {
+    // console.log("Client side is " + data.side);
+    // console.log("Client amount is " + data.amount);
+    //  console.log("Client userId is " + data.userId);
+  });
 });
 
 // Function to update the variable and emit event if it changes
@@ -86,12 +93,13 @@ const toss = () => {
   const faceCoin = randomVal < 0.5 ? "HEAD" : "TAIL";
   const newValue = Math.floor(Math.random() * 100);
   updateVariable(newValue, "Betting", result, history);
+
   setTimeout(() => {
     updateVariable(newValue, "Spinning", result, history);
     setTimeout(() => {
       addCoinbet(45, 78, faceCoin);
       updateHistory(history);
-      updateVariable(newValue, "Waiting", faceCoin, history);
+      updateVariable(newValue, "Showing", faceCoin, history);
     }, 10 * 1000);
   }, 10 * 1000);
 };

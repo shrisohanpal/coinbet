@@ -10,9 +10,7 @@ const coinSlice = createSlice({
     setCoinData: (state, action) => {
       state.history = action.payload.history;
       state.status = action.payload.status;
-      state.result = action.payload.result
-        ? action.payload.result
-        : state.result;
+      state.result = action.payload.result;
     },
   },
 });

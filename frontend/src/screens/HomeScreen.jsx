@@ -14,9 +14,15 @@ import { setCoinData } from "../slices/coinSlice";
 import HistoryElement from "../components/HistoryElement";
 import SpinningCoin from "../components/SpinningCoin";
 
+const socket = io("", {
+  autoConnect: true,
+});
+
 const HomeScreen = () => {
   const [variableValue, setVariableValue] = useState(0);
   const [userLogin, setUserLogin] = useState(false);
+  const [betted, setBetted] = useState(false);
+  const [betside, setBetside] = useState(null);
   const [betAmount, setBetAmount] = useState(100);
   const newAmt = (hty) => {
     setBetAmount(Number(hty.target.value));
@@ -26,13 +32,9 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io("", {
-      autoConnect: true,
-    });
-
     socket.on("variableChanged", (data) => {
       setVariableValue(data.value);
-
+      setBetted(false);
       dispatch(
         setCoinData({
           history: data.history,
@@ -42,17 +44,18 @@ const HomeScreen = () => {
       );
     });
 
-    socket.on("updateHistory", (data) => {
-      //setHistory(data.history);
-    });
-
     return () => {
       socket.disconnect();
     };
   }, []);
 
   const betHandler = () => {
-    console.log("Laga diya !");
+    setBetted(true);
+    socket.emit("betted", {
+      side: betside,
+      userId: "fdsgfssdg23423",
+      amount: betAmount,
+    });
   };
 
   return (
@@ -90,10 +93,16 @@ const HomeScreen = () => {
           <strong>Result: {coinData.result}</strong>
         </Card.Text>
 
-        <Form.Select className="my-3" aria-label="Default select example">
+        <Form.Select
+          onChange={(e) => {
+            setBetside(e.target.value);
+          }}
+          className="my-3"
+          aria-label="Default select example"
+        >
           <option>Select Your Side</option>
-          <option value="1">Head</option>
-          <option value="2">Tail</option>
+          <option value="HEAD">Head</option>
+          <option value="TAIL">Tail</option>
         </Form.Select>
 
         <Row>
@@ -109,7 +118,7 @@ const HomeScreen = () => {
           <Col>
             <Button
               className="my-1"
-              disabled={coinData.status != "Betting"}
+              disabled={coinData.status != "Betting" || betted}
               type="submit"
               onClick={betHandler}
               variant="primary"

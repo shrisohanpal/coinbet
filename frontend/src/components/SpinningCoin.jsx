@@ -24,7 +24,7 @@ const SpinningCoin = ({ status, result }) => {
       </style>
       <Card.Img
         src={
-          status == "Waiting"
+          status == "Showing"
             ? result == "HEAD"
               ? require("../assets/heads.png")
               : require("../assets/tails.png")
