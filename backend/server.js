@@ -16,6 +16,10 @@ let status;
 let result;
 let history = [];
 
+let headbetAmt = 0;
+let tailbetAmt = 0;
+let totalBets = [];
+
 connectDB();
 const app = express();
 
@@ -73,30 +77,48 @@ io.on("connection", (socket) => {
   });
 
   socket.on("betted", (data) => {
-    // console.log("Client side is " + data.side);
-    // console.log("Client amount is " + data.amount);
-    //  console.log("Client userId is " + data.userId);
+    totalBets.push({
+      userId: data.userId,
+      socketId: socket.id,
+      side: data.side,
+      amount: data.amount,
+    });
+    if (data.side == "HEAD") {
+      headbetAmt += data.amount;
+    } else {
+      tailbetAmt += data.amount;
+    }
+    console.log("tail total: " + tailbetAmt);
+    console.log("head total: " + headbetAmt);
   });
 });
 
-// Function to update the variable and emit event if it changes
 const updateVariable = (newValue, status, result) => {
   io.emit("variableChanged", { value: newValue, status, result, history });
 };
-/*
-const updateHistory = (history) => {
-  io.emit("updateHistory", { history });
-};*/
 
 const toss = () => {
-  const randomVal = Math.random();
-  const faceCoin = randomVal < 0.5 ? "HEAD" : "TAIL";
+  headbetAmt = 0;
+  tailbetAmt = 0;
+  totalBets = [];
   const newValue = Math.floor(Math.random() * 100);
   updateVariable(newValue, "Betting", result, history);
 
   setTimeout(() => {
+    // It will run after 10 seconds
     updateVariable(newValue, "Spinning", result, history);
+
+    const faceCoin =
+      headbetAmt == 0 || tailbetAmt == 0 || headbetAmt == tailbetAmt
+        ? Math.random() > 0.5
+          ? "HEAD"
+          : "TAIL"
+        : headbetAmt > tailbetAmt
+        ? "TAIL"
+        : "HAID";
+
     setTimeout(() => {
+      // It will run after 10 seconds
       addCoinbet(45, 78, faceCoin);
       updateHistory(history);
       updateVariable(newValue, "Showing", faceCoin, history);

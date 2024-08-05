@@ -29,6 +29,8 @@ const HomeScreen = () => {
   };
 
   const coinData = useSelector((state) => state.coin);
+  const { userInfo } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const HomeScreen = () => {
     setBetted(true);
     socket.emit("betted", {
       side: betside,
-      userId: "fdsgfssdg23423",
+      userId: userInfo._id,
       amount: betAmount,
     });
   };
