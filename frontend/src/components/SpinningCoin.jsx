@@ -24,9 +24,11 @@ const SpinningCoin = ({ status, result }) => {
       </style>
       <Card.Img
         src={
-          result == "HEAD"
-            ? require("../assets/heads.png")
-            : require("../assets/tails.png")
+          status == "Waiting"
+            ? result == "HEAD"
+              ? require("../assets/heads.png")
+              : require("../assets/tails.png")
+            : require("../assets/random.png")
         }
         variant="top"
         className={status == "Spinning" ? "rotating-image" : ""}
