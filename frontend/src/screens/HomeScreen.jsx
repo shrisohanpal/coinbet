@@ -36,7 +36,13 @@ const HomeScreen = () => {
   useEffect(() => {
     socket.on("variableChanged", (data) => {
       setVariableValue(data.value);
-      setBetted(false);
+      if (data.status == "Betting") {
+        setBetted(false);
+        // console.log("JKL " + data.status);
+      }
+      if (data.status == "Showing") {
+        // likhna ho kuch to likh diyo
+      }
       dispatch(
         setCoinData({
           history: data.history,
@@ -85,11 +91,18 @@ const HomeScreen = () => {
         </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
-        {/*
-          <Card.Text>variable: {variableValue}</Card.Text>
+        <Card.Text>variable: {variableValue}</Card.Text>
         <Card.Text>Status: {coinData.status}</Card.Text>
         <Card.Text>Result: {coinData.result}</Card.Text>
-        */}
+        <Card.Text>
+          Betted?:{" "}
+          {coinData.status == "Showing" && betted == true
+            ? betside == coinData.result
+              ? "YOU WON"
+              : "YOU LOSE"
+            : "nahi lagaya"}
+        </Card.Text>
+
         <SpinningCoin status={coinData.status} result={coinData.result} />
         <Card.Text className="mx-auto my-2">
           <strong>Result: {coinData.result}</strong>
