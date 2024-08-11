@@ -101,7 +101,11 @@ const WalletScreen = () => {
           </Col>
         </Row>
       </Card>
-      <Modal show={showDepositeModal} onHide={handleDepositeClose}>
+      <Modal
+        show={showDepositeModal}
+        onHide={handleDepositeClose}
+        style={{ marginTop: "100px" }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Deposite Now</Modal.Title>
         </Modal.Header>

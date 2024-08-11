@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const userbetSchema = mongoose.Schema(
   {
@@ -6,8 +6,12 @@ const userbetSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    side: {
+      type: String,
+      required: true,
+    },
     result: {
-      type: Boolean,
+      type: String,
       required: true,
     },
   },
@@ -16,6 +20,6 @@ const userbetSchema = mongoose.Schema(
   }
 );
 
-const Userbet = mongoose.model('Userbet', userbetSchema);
+const Userbet = mongoose.model("Userbet", userbetSchema);
 
 export default Userbet;

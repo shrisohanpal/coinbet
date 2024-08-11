@@ -52,29 +52,15 @@ if (process.env.NODE_ENV === "production") {
 app.use(notFound);
 app.use(errorHandler);
 
-/*
-toss(status,result);
-const readg = () =>{
-  toss(status,result)
-}
-setInterval(readg, 30 * 1000);*/
-//app.listen(port, () => console.log(`Server running on port ${port}`));
-
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   //cors: "http://localhost:3000",
   cors: "*",
 });
 
-let variableToWatch = 0;
-
 io.on("connection", (socket) => {
   console.log("Socket is connected & id is: " + socket.id);
-  socket.emit("variableChanged", { value: variableToWatch, status, result });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected"); //fdfd
-  });
+  socket.emit("statusChanged", { status, result });
 
   socket.on("betted", (data) => {
     totalBets.push({
@@ -91,10 +77,14 @@ io.on("connection", (socket) => {
     console.log("tail total: " + tailbetAmt);
     console.log("head total: " + headbetAmt);
   });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
 });
 
-const updateVariable = (newValue, status, result) => {
-  io.emit("variableChanged", { value: newValue, status, result, history });
+const updateVariable = (status, result) => {
+  io.emit("statusChanged", { status, result, history });
 };
 
 const toss = () => {
@@ -126,6 +116,7 @@ const toss = () => {
   }, 10 * 1000);
 };
 
+toss();
 setInterval(() => {
   toss();
 }, 30 * 1000);

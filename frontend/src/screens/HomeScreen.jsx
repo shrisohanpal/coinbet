@@ -7,6 +7,7 @@ import {
   Button,
   Form,
   Image,
+  Modal,
   Accordion,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +20,6 @@ const socket = io("", {
 });
 
 const HomeScreen = () => {
-  const [variableValue, setVariableValue] = useState(0);
   const [userLogin, setUserLogin] = useState(false);
   const [betted, setBetted] = useState(false);
   const [betside, setBetside] = useState(null);
@@ -34,8 +34,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.on("variableChanged", (data) => {
-      setVariableValue(data.value);
+    socket.on("statusChanged", (data) => {
       if (data.status == "Betting") {
         setBetted(false);
         // console.log("JKL " + data.status);
@@ -91,16 +90,19 @@ const HomeScreen = () => {
         </Accordion>
       </Card>
       <Card className="my-3 p-3 rounded">
-        <Card.Text>variable: {variableValue}</Card.Text>
+        {/* <Card.Text>variable: {variableValue}</Card.Text>
         <Card.Text>Status: {coinData.status}</Card.Text>
-        <Card.Text>Result: {coinData.result}</Card.Text>
+        <Card.Text>Result: {coinData.result}</Card.Text> */}
         <Card.Text>
-          Betted?:{" "}
-          {coinData.status == "Showing" && betted == true
-            ? betside == coinData.result
-              ? "YOU WON"
-              : "YOU LOSE"
-            : "nahi lagaya"}
+          {coinData.status == "Showing" && betted == true ? (
+            betside == coinData.result ? (
+              <h1>YOU WON</h1>
+            ) : (
+              <h1>YOU LOSE</h1>
+            )
+          ) : (
+            ""
+          )}
         </Card.Text>
 
         <SpinningCoin status={coinData.status} result={coinData.result} />
